@@ -1,24 +1,41 @@
-# ai-chat
+# Minimal Chat
+
+This is a very simple chat interface for interacting with LLMs. I mostly just made this to test my Apple Intelligence API.
+
+## Features
+- [X] Basic chat interface
+- [X] Streaming responses
+- [X] Markdown support
+
+Improvements that could be made
+- [ ] Port to Nuxt (and move OpenRouter calls to backend)
+- [ ] Sotre chat history with local storage (a database is probably overkill for this...)
+
+For my purposes, this project is complete. But if you're looking to get your hands dirty with Vue or Nuxt, I would welcome any PRs!
 
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### API key
+If you want to use this, you need to create a file `./src/keys.js` with the line
+```
+export const API_KEY = < your API key >
+```
+Note that this is terrible for anything except simple testing. Your API key **will** be exposed in the front end!
+
+### Compile with hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compile and minify for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Lint and fix files
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
