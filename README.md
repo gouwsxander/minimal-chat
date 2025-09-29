@@ -1,6 +1,8 @@
 # Minimal Chat
 
-This is a very simple chat interface for interacting with LLMs. I mostly just made this to test my Apple Intelligence API.
+A very simple chat interface for interacting with LLMs. I mostly just made this to test my Apple Intelligence API.
+
+![Screenshot of the user interface](./interface.png)
 
 ## Features
 - [X] Basic chat interface
@@ -8,8 +10,9 @@ This is a very simple chat interface for interacting with LLMs. I mostly just ma
 - [X] Markdown support
 
 Improvements that could be made
+- [ ] Any number of visual improvements...
 - [ ] Port to Nuxt (and move OpenRouter calls to backend)
-- [ ] Sotre chat history with local storage (a database is probably overkill for this...)
+- [ ] Store chat history with local storage (a database is probably overkill for this...)
 
 For my purposes, this project is complete. But if you're looking to get your hands dirty with Vue or Nuxt, I would welcome any PRs!
 
