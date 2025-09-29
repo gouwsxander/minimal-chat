@@ -3,6 +3,7 @@
     <textarea
       v-model="prompt"
       @keydown.enter="handleKeydown"
+      :style="{ height: getTextAreaHeight() + 'em' }"
       placeholder=""
     ></textarea>
     <button @click="sendPrompt" :disabled="props.disabled">Send</button>
@@ -31,6 +32,15 @@ function sendPrompt() {
   emit("onMessage", prompt.value);
   prompt.value = "";
 }
+
+function getTextAreaHeight() {
+  let lines = 1.15 * prompt.value.split("\n").length;
+  return clamp(lines, 4, 16);
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
 </script>
 
 <style scoped>
@@ -38,7 +48,7 @@ textarea {
   font-size: 1rem;
   resize: none;
   width: 100%;
-  height: auto;
+  /*height: auto;*/
   min-height: 4rem;
   margin-bottom: 0.5rem;
 }
