@@ -111,6 +111,8 @@ async function streamOpenRouterAPI(messageHistory, onChunk) {
 }
 
 async function handleNewPrompt(prompt) {
+  isReceiving.value = true;
+
   messages.value.push({
     role: "user",
     content: prompt,
@@ -121,8 +123,6 @@ async function handleNewPrompt(prompt) {
     role: "assistant",
     content: "",
   });
-
-  isReceiving.value = true;
 
   try {
     await streamOpenRouterAPI(messages.value.slice(0, -1), (chunk) => {

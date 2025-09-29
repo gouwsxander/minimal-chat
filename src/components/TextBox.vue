@@ -22,7 +22,7 @@ const props = defineProps({
 });
 
 function handleKeydown(event) {
-  if (event.key === "Enter" && !event.shiftKey) {
+  if (event.key === "Enter" && !event.shiftKey && !props.disabled) {
     event.preventDefault();
     sendPrompt();
   }
