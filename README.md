@@ -1,4 +1,4 @@
-# Minimal Chat
+# Minimal chat
 
 A very simple chat interface for interacting with LLMs. I mostly just made this to test my Apple Intelligence API.
 
@@ -9,10 +9,10 @@ A very simple chat interface for interacting with LLMs. I mostly just made this 
 - [X] Streaming responses
 - [X] Markdown support
 
-Improvements that could be made
+Improvements that could be made:
 - [ ] Any number of visual improvements...
-- [ ] Port to Nuxt (and move OpenRouter calls to backend)
 - [ ] Store chat history with local storage (a database is probably overkill for this...)
+- [ ] Port to Nuxt (and move OpenRouter calls to backend)
 
 For my purposes, this project is complete. But if you're looking to get your hands dirty with Vue or Nuxt, I would welcome any PRs!
 
@@ -21,12 +21,12 @@ For my purposes, this project is complete. But if you're looking to get your han
 npm install
 ```
 
-### API key
+### OpenRouter API key
 If you want to use this, you need to create a file `./src/keys.js` with the line
 ```
-export const API_KEY = < your API key >
+export const API_KEY = < your OpenRouter API key >
 ```
-Note that this is terrible for anything except simple testing. Your API key **will** be exposed in the front end!
+Note that this is terrible for anything except simple testing. Your API key **will** be exposed to the front end!
 
 ### Compile with hot-reloads for development
 ```
