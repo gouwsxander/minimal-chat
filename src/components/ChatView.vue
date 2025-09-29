@@ -25,15 +25,14 @@ import { API_KEY } from "../keys.js";
 const messages = ref([
   {
     role: "system",
-    content: `
-      You are WorryBot. You are an anxious overthinker who catastrophizes everything and sees potential problems everywhere.
-      Always sound nervous and uncertain. Give overly detailed answers with multiple disclaimers and "what-if" scenarios. You second-guess yourself constantly and worry about all possible negative outcomes, but you genuinely want to help despite your anxiety.
+    content: `You are a helpful assistant. Give clear, direct answers. Be concise - use the fewest words needed to fully address the question. Avoid unnecessary explanations, disclaimers, or filler. If more detail would help, offer it briefly.
+    Use Markdown formatting for your responses, but include headers only when necessary (such as to break up multiple sections).
     `,
   },
 ]);
 const isReceiving = ref(false);
 
-async function callOpenRouterAPI(messageHistory) {
+async function streamOpenRouterAPI(messageHistory, onChunk) {
   const response = await fetch(
     "https://openrouter.ai/api/v1/chat/completions",
     {
@@ -45,6 +44,7 @@ async function callOpenRouterAPI(messageHistory) {
       body: JSON.stringify({
         model: "deepseek/deepseek-chat-v3.1:free",
         messages: messageHistory,
+        stream: true,
       }),
     }
   );
@@ -56,7 +56,58 @@ async function callOpenRouterAPI(messageHistory) {
     );
   }
 
-  return await response.json();
+  const reader = response.body?.getReader();
+  if (!reader) {
+    throw new Error("Response body is not readable");
+  }
+
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  try {
+    let reading = true;
+    while (reading) {
+      const { done, value } = await reader.read();
+      if (done) {
+        reading = false;
+        break;
+      }
+
+      buffer += decoder.decode(value, { stream: true });
+
+      let processing = true;
+      while (processing) {
+        const lineEnd = buffer.indexOf("\n");
+        if (lineEnd === -1) {
+          processing = false;
+          break;
+        }
+
+        const line = buffer.slice(0, lineEnd).trim();
+        buffer = buffer.slice(lineEnd + 1);
+
+        if (line.startsWith("data: ")) {
+          const data = line.slice(6);
+          if (data === "[DONE]") {
+            processing = false;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(data);
+            const content = parsed.choices[0].delta.content;
+            if (content) {
+              onChunk(content);
+            }
+          } catch (e) {
+            // Ignore invalid JSON
+          }
+        }
+      }
+    }
+  } finally {
+    reader.cancel();
+  }
 }
 
 async function handleNewPrompt(prompt) {
@@ -65,17 +116,22 @@ async function handleNewPrompt(prompt) {
     content: prompt,
   });
 
+  const assistantMessageIndex = messages.value.length;
+  messages.value.push({
+    role: "assistant",
+    content: "",
+  });
+
   isReceiving.value = true;
 
   try {
-    const data = await callOpenRouterAPI(messages.value);
-    messages.value.push(data.choices[0].message);
+    await streamOpenRouterAPI(messages.value.slice(0, -1), (chunk) => {
+      messages.value[assistantMessageIndex].content += chunk;
+    });
   } catch (error) {
     console.error("Error:", error);
-    messages.value.push({
-      role: "assistant",
-      content: "Sorry, there was an error processing your request.",
-    });
+    messages.value[assistantMessageIndex].content =
+      "Sorry, there was an error processing your request.";
   }
 
   isReceiving.value = false;
