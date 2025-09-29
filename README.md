@@ -2,7 +2,9 @@
 
 A very simple chat interface for interacting with LLMs. I mostly just made this to test my Apple Intelligence API.
 
-![Screenshot of the user interface](./interface.png)
+<p align="center">
+<img src="./interface.png" width="750">
+</p>
 
 ## Features
 - [X] Basic chat interface
