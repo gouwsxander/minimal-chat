@@ -1,6 +1,6 @@
 # Minimal chat
 
-A very simple chat interface for interacting with LLMs. I mostly just made this to test my Apple Intelligence API.
+A very simple chat interface for interacting with LLMs.
 
 <p align="center">
 <img src="./interface.png" width="750">
@@ -12,35 +12,40 @@ A very simple chat interface for interacting with LLMs. I mostly just made this 
 - [X] Markdown support
 
 Improvements that could be made:
-- [ ] Any number of visual improvements...
-- [ ] Store chat history with local storage (a database is probably overkill for this...)
-- [ ] Port to Nuxt (and move OpenRouter calls to backend)
+- [ ] Use NuxtUI module for chat interface elements
+- [ ] Move to using Vercel's AI SDK, with API calls made on the backend
+- [ ] Enable multiple chats (with side bar to switch between them)
+- [ ] Store chats using a SQLite database (I'm imagining Drizzle + Bun SQLite)
+- [ ] Authentication (I'm imagining better-auth)
+- [ ] Allow client to change the model and/or provider
+- [ ] General visual improvements...
 
-For my purposes, this project is complete. But if you're looking to get your hands dirty with Vue or Nuxt, I would welcome any PRs!
+If you're looking to get your hands dirty with Vue or Nuxt, I would welcome any PRs!
 
 ## Project setup
+### Install dependencies
 ```
-npm install
+bun install
 ```
 
 ### OpenRouter API key
-If you want to use this, you need to create a file `./src/keys.js` with the line
+If you want to use this, you need to create a file `./app/keys.js` with the line
 ```
 export const API_KEY = < your OpenRouter API key >
 ```
 Note that this is terrible for anything except simple testing. Your API key **will** be exposed to the front end!
 
-### Compile with hot-reloads for development
+### Run development server
 ```
-npm run serve
-```
-
-### Compile and minify for production
-```
-npm run build
+bun run dev
 ```
 
-### Lint and fix files
+### Build for production
 ```
-npm run lint
+bun run build
+```
+
+### Preview production build
+```
+bun run preview
 ```
