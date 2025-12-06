@@ -6,13 +6,13 @@
             :style="{ height: getTextAreaHeight() + 'em' }"
             placeholder=""
         ></textarea>
-        <button @click="sendPrompt" :disabled="props.disabled">Send</button>
+        <button @click="sendPrompt" :disabled="disabled">Send</button>
     </div>
 </template>
 
 <script setup>
 const emit = defineEmits(["onMessage"]);
-const prompt = ref("");
+const prompt = useState("textbox-prompt", () => "");
 
 const props = defineProps({
     disabled: Boolean,

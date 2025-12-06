@@ -3,8 +3,7 @@
         id="container"
         :class="{ 'user-message': isUser, 'bot-message': !isUser }"
     >
-        <!-- {{ props.content }} -->
-        <div id="messageContent" v-html="covertToHtml(props.content)"></div>
+        <div id="messageContent" v-html="convertToHtml(content)"></div>
     </div>
 </template>
 
@@ -16,8 +15,8 @@ const props = defineProps({
     content: String,
 });
 
-var converter = new showdown.Converter();
-function covertToHtml(text) {
+const converter = new showdown.Converter();
+function convertToHtml(text) {
     return converter.makeHtml(text);
 }
 </script>

@@ -3,8 +3,8 @@
         <div id="message-container">
             <div v-for="(message, index) in messages" :key="index">
                 <ChatMessage
-                    v-if="message.role != 'system'"
-                    :isUser="message.role == 'user'"
+                    v-if="message.role !== 'system'"
+                    :isUser="message.role === 'user'"
                     :content="message.content"
                 />
             </div>
@@ -18,7 +18,7 @@
 <script setup>
 import { API_KEY } from "../keys.js";
 
-const messages = ref([
+const messages = useState("chat-messages", () => [
     {
         role: "system",
         content: `You are a helpful assistant. Give clear, direct answers. Be concise - use the fewest words needed to fully address the question. Avoid unnecessary explanations, disclaimers, or filler. If more detail would help, offer it briefly.
@@ -26,7 +26,7 @@ const messages = ref([
     `,
     },
 ]);
-const isReceiving = ref(false);
+const isReceiving = useState("chat-isReceiving", () => false);
 
 async function streamOpenRouterAPI(messageHistory, onChunk) {
     const response = await fetch(
