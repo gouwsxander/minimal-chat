@@ -16,10 +16,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import TextBox from "./TextBox.vue";
-import ChatMessage from "./ChatMessage.vue";
-
 import { API_KEY } from "../keys.js";
 
 const messages = ref([
