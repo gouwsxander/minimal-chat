@@ -20,7 +20,7 @@ For my purposes, this project is complete. But if you're looking to get your han
 
 ## Project setup
 ```
-npm install
+bun install
 ```
 
 ### OpenRouter API key
@@ -30,17 +30,17 @@ export const API_KEY = < your OpenRouter API key >
 ```
 Note that this is terrible for anything except simple testing. Your API key **will** be exposed to the front end!
 
-### Compile with hot-reloads for development
+### Run development server
 ```
-npm run serve
-```
-
-### Compile and minify for production
-```
-npm run build
+bun run dev
 ```
 
-### Lint and fix files
+### Build for production
 ```
-npm run lint
+bun run build
+```
+
+### Locally preview production build
+```
+bun run preview
 ```
