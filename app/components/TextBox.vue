@@ -2,11 +2,11 @@
     <div>
         <textarea
             v-model="prompt"
-            @keydown.enter="handleKeydown"
             :style="{ height: getTextAreaHeight() + 'em' }"
             placeholder=""
-        ></textarea>
-        <button @click="sendPrompt" :disabled="disabled">Send</button>
+            @keydown.enter="handleKeydown"
+        />
+        <button :disabled="disabled" @click="sendPrompt">Send</button>
     </div>
 </template>
 
@@ -31,7 +31,7 @@ function sendPrompt() {
 }
 
 function getTextAreaHeight() {
-    let lines = 1.15 * prompt.value.split("\n").length;
+    const lines = 1.15 * prompt.value.split("\n").length;
     return clamp(lines, 4, 16);
 }
 

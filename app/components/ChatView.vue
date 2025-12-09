@@ -4,13 +4,13 @@
             <div v-for="(message, index) in messages" :key="index">
                 <ChatMessage
                     v-if="message.role !== 'system'"
-                    :isUser="message.role === 'user'"
+                    :is-user="message.role === 'user'"
                     :content="message.content"
                 />
             </div>
         </div>
         <div id="textbox-container">
-            <TextBox @onMessage="handleNewPrompt" :disabled="isReceiving" />
+            <TextBox :disabled="isReceiving" @on-message="handleNewPrompt" />
         </div>
     </div>
 </template>
@@ -95,7 +95,7 @@ async function streamOpenRouterAPI(messageHistory, onChunk) {
                         if (content) {
                             onChunk(content);
                         }
-                    } catch (e) {
+                    } catch {
                         // Ignore invalid JSON
                     }
                 }

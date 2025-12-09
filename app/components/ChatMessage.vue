@@ -3,16 +3,19 @@
         id="container"
         :class="{ 'user-message': isUser, 'bot-message': !isUser }"
     >
-        <div id="messageContent" v-html="convertToHtml(content)"></div>
+        <div id="messageContent" v-html="convertToHtml(content)" />
     </div>
 </template>
 
 <script setup>
 import showdown from "showdown";
 
-const props = defineProps({
+defineProps({
     isUser: Boolean,
-    content: String,
+    content: {
+        type: String,
+        default: "",
+    },
 });
 
 const converter = new showdown.Converter();
